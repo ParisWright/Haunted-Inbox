@@ -9,10 +9,15 @@
 <meta property="og:title" content="Haunted Inbox">
 <meta property="og:description" content="A Halloween phishing-awareness game for the night shift.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%20130%22%20width%3D%22120%22%20height%3D%22130%22%3E%20%3Crect%20x%3D%2254%22%20y%3D%2270%22%20width%3D%2212%22%20height%3D%2258%22%20rx%3D%223%22%20fill%3D%22%23352950%22/%3E%20%3Cpath%20d%3D%22M18%2046a26%2026%200%200%201%2052%200v34H18z%22%20fill%3D%22%23261c3f%22%20stroke%3D%22%238b5cf6%22%20stroke-width%3D%223%22/%3E%20%3Cpath%20d%3D%22M44%2020h40a26%2026%200%200%201%2026%2026v34H70V46a26%2026%200%200%200-26-26z%22%20fill%3D%22%231c1430%22%20stroke%3D%22%238b5cf6%22%20stroke-width%3D%223%22/%3E%20%3Crect%20x%3D%2296%22%20y%3D%2226%22%20width%3D%225%22%20height%3D%2234%22%20fill%3D%22%23ff7a1a%22/%3E%20%3Cpath%20d%3D%22M101%2026h16l-4%207%204%207h-16z%22%20fill%3D%22%23ff7a1a%22/%3E%20%3Cpath%20d%3D%22M44%2062c0-14%208-26%2020-26s20%2012%2020%2026v20l-5-4-5%204-5-4-5%204-5-4-5%204-5-4-5%204z%22%20fill%3D%22%23f4eefc%22%20opacity%3D%22.95%22%20transform%3D%22translate%28-26%2C-30%29%22/%3E%20%3Cellipse%20cx%3D%2232%22%20cy%3D%2234%22%20rx%3D%223%22%20ry%3D%224.5%22%20fill%3D%22%2309060f%22/%3E%20%3Cellipse%20cx%3D%2244%22%20cy%3D%2234%22%20rx%3D%223%22%20ry%3D%224.5%22%20fill%3D%22%2309060f%22/%3E%20%3Cellipse%20cx%3D%2238%22%20cy%3D%2243%22%20rx%3D%223.5%22%20ry%3D%222.5%22%20fill%3D%22%2309060f%22/%3E%20%3Crect%20x%3D%2224%22%20y%3D%2256%22%20width%3D%2240%22%20height%3D%2222%22%20rx%3D%223%22%20fill%3D%22%23ff7a1a%22%20transform%3D%22rotate%28-8%2044%2067%29%22/%3E%20%3Cpath%20d%3D%22M25%2058l19%2011%2019-14%22%20fill%3D%22none%22%20stroke%3D%22%231a0b00%22%20stroke-width%3D%222.5%22%20transform%3D%22rotate%28-8%2044%2067%29%22/%3E%20%3C/svg%3E">
+<link rel="icon" type="image/png" href="assets/logos/haunted-inbox-mark-1024.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Manrope:wght@400;500;600;700;800&display=swap">
 <style>
+/* ---------- files from the assets/ folder ----------
+   Everything still works without them: each one falls back to the built-in version. */
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-Bold.ttf") format("truetype"); font-weight: 500 800; font-display: swap; }
 /* Base reset (matches the preview environment) */
 html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; }
@@ -61,6 +66,7 @@ button { font: inherit; color: inherit; }
 /* ---------- sky ---------- */
 .sky { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
   background:
+    url("assets/background/haunted-inbox-background-plain-sky-1920x1080.png") center / cover no-repeat,
     radial-gradient(60vmax 40vmax at 85% -10%, rgba(139,92,246,.28), transparent 60%),
     radial-gradient(50vmax 35vmax at 0% 110%, rgba(59,26,120,.45), transparent 65%),
     var(--night); }
@@ -73,7 +79,7 @@ button { font: inherit; color: inherit; }
 .fog.f2 { bottom: 20vh; opacity: .6; animation-duration: 65s; animation-direction: reverse; }
 @keyframes drift { from { transform: translateX(0); } to { transform: translateX(25%); } }
 .wisp { position: absolute; width: 34px; opacity: .22; color: var(--bone); animation: float 9s ease-in-out infinite; }
-.wisp svg { width: 100%; display: block; }
+.wisp svg, .wisp img { width: 100%; display: block; }
 @keyframes float { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-24px) rotate(4deg); } }
 
 #app { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; }
@@ -94,6 +100,7 @@ kbd { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border-radius
 .landing { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr); gap: 48px; align-items: center; padding-block: 4vh 2vh; }
 .brand { display: flex; align-items: center; gap: 18px; }
 .brand svg { width: 92px; height: auto; flex: none; filter: drop-shadow(0 0 24px rgba(139,92,246,.5)); }
+.brand img { width: 120px; height: auto; flex: none; margin-right: -14px; filter: drop-shadow(0 0 24px rgba(139,92,246,.5)); }
 .wordmark { font-family: var(--display); font-weight: 400; font-size: clamp(54px, 8vw, 104px); line-height: .9; margin: 0;
   color: var(--pumpkin); text-shadow: 0 0 28px rgba(255,122,26,.35), 0 4px 0 var(--haze-deep); animation: flicker 7s infinite; }
 .wordmark span { color: var(--bone); }
@@ -243,6 +250,14 @@ kbd { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border-radius
 .seal svg { width: 24px; height: 24px; }
 .seal.locked { background: var(--tomb-hi); color: var(--line); transform: none; }
 .seal.past { background: linear-gradient(145deg, var(--haze), var(--haze-deep)); color: var(--bone); }
+/* badge art from assets/icons: seal-*.png when earned, badge-*.png (greyed) when locked */
+.seal.has-art { background: none; transform: none; }
+.seal.has-art img { width: 100%; height: 100%; display: block; object-fit: contain; }
+.seal.locked.has-art { background: var(--tomb-hi); }
+.seal.locked.has-art img { width: 62%; height: 62%; filter: grayscale(1) brightness(.6); opacity: .55; }
+.seal.past.has-art img { filter: hue-rotate(235deg) saturate(.9); }
+.badge.fresh .seal.has-art { animation-name: stamp-art; }
+@keyframes stamp-art { from { transform: scale(1.8) rotate(-20deg); opacity: 0; } to { transform: none; opacity: 1; } }
 
 /* ---------- results ---------- */
 .results-head { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr); gap: 20px; align-items: stretch; margin-top: 8px; }
@@ -289,6 +304,7 @@ kbd { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border-radius
 }
 @media (max-width: 520px) {
   .brand svg { width: 64px; }
+  .brand img { width: 84px; margin-right: -10px; }
   .story { padding: 20px; }
   .hrow { grid-template-columns: 62px minmax(0,1fr); }
   .headers, .mailbody, .subject { padding-left: 16px; padding-right: 16px; }
@@ -308,9 +324,9 @@ kbd { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border-radius
 <div class="sky" aria-hidden="true">
   <div class="moon"></div>
   <div class="fog"></div><div class="fog f2"></div>
-  <div class="wisp" style="left:6%;top:30%"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a8 8 0 0 0-8 8v12l3-2 2.5 2 2.5-2 2.5 2 2.5-2 3 2V10a8 8 0 0 0-8-8z"/></svg></div>
-  <div class="wisp" style="left:46%;top:12%;width:22px;animation-delay:-3s"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a8 8 0 0 0-8 8v12l3-2 2.5 2 2.5-2 2.5 2 2.5-2 3 2V10a8 8 0 0 0-8-8z"/></svg></div>
-  <div class="wisp" style="right:12%;top:62%;width:28px;animation-delay:-6s"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a8 8 0 0 0-8 8v12l3-2 2.5 2 2.5-2 2.5 2 2.5-2 3 2V10a8 8 0 0 0-8-8z"/></svg></div>
+  <div class="wisp" style="left:6%;top:30%"><img src="assets/monsters/haunted-inbox-ghost.svg" alt="" onerror="this.parentNode.innerHTML='<svg viewBox=&quot;0 0 24 24&quot;><path fill=&quot;currentColor&quot; d=&quot;M12 2a8 8 0 0 0-8 8v12l3-2 2.5 2 2.5-2 2.5 2 2.5-2 3 2V10a8 8 0 0 0-8-8z&quot;/></svg>'"></div>
+  <div class="wisp" style="left:46%;top:12%;width:22px;animation-delay:-3s"><img src="assets/monsters/haunted-inbox-ghost.svg" alt="" onerror="this.parentNode.innerHTML='<svg viewBox=&quot;0 0 24 24&quot;><path fill=&quot;currentColor&quot; d=&quot;M12 2a8 8 0 0 0-8 8v12l3-2 2.5 2 2.5-2 2.5 2 2.5-2 3 2V10a8 8 0 0 0-8-8z&quot;/></svg>'"></div>
+  <div class="wisp" style="right:12%;top:62%;width:28px;animation-delay:-6s"><img src="assets/monsters/haunted-inbox-ghost.svg" alt="" onerror="this.parentNode.innerHTML='<svg viewBox=&quot;0 0 24 24&quot;><path fill=&quot;currentColor&quot; d=&quot;M12 2a8 8 0 0 0-8 8v12l3-2 2.5 2 2.5-2 2.5 2 2.5-2 3 2V10a8 8 0 0 0-8-8z&quot;/></svg>'"></div>
 </div>
 
 <div id="app">
@@ -319,7 +335,8 @@ kbd { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border-radius
     <div class="landing">
       <div>
         <div class="brand">
-          <svg viewBox="0 0 120 130" aria-hidden="true">
+          <img src="assets/logos/haunted-inbox-mark-1024.png" alt="" width="120" height="120" onerror="this.nextElementSibling.hidden=false;this.remove()">
+          <svg viewBox="0 0 120 130" aria-hidden="true" hidden>
             <rect x="54" y="70" width="12" height="58" rx="3" fill="#352950"/>
             <path d="M18 46a26 26 0 0 1 52 0v34H18z" fill="#261c3f" stroke="#8b5cf6" stroke-width="3"/>
             <path d="M44 20h40a26 26 0 0 1 26 26v34H70V46a26 26 0 0 0-26-26z" fill="#1c1430" stroke="#8b5cf6" stroke-width="3"/>
@@ -636,6 +653,16 @@ kbd { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border-radius
   function saveProfile(p) { try { localStorage.setItem(STORE_KEY, JSON.stringify(p)); } catch (e) {} }
   let profile = loadProfile();
 
+  /* ---------------- badge art (assets/icons) ---------------- */
+  const BADGE_ART = { first: "first-fright-ghost", streak5: "ghostbuster-shield", streak10: "exorcist-flame", flawless: "flawless-seance-star",
+    speed: "speed-demon-bolt", nightmare: "nightmare-survivor-moon", souls: "soul-collector-heart", calm: "calm-nerves-eye" };
+  function fillSeal(seal, a, locked) {
+    const img = new Image(); img.alt = ""; img.decoding = "async";
+    img.src = "assets/icons/" + (locked ? "badge-" : "seal-") + BADGE_ART[a.id] + ".png";
+    img.onerror = () => { seal.classList.remove("has-art"); img.replaceWith(svgIcon(ICONS[a.icon])); }; // file missing: draw the icon instead
+    seal.classList.add("has-art"); seal.append(img);
+  }
+
   /* ---------------- sound ---------------- */
   let muted = false, actx = null, musicOn = true;
   try { musicOn = localStorage.getItem("hauntedInbox:music") !== "off"; } catch (e) {}
@@ -646,7 +673,7 @@ kbd { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border-radius
 
   /* Original generative soundtrack: D harmonic-minor music box (Dm, Bb, Gm, A) over bass, a tremolo organ pad,
      a distant bell every four bars, and a theremin glide on the Nightmare tier. Tempo rises with the tier. */
-  const music = (() => {
+  const synthMusic = (() => {
     const CH = [[62, 65, 69], [58, 62, 65], [55, 58, 62], [57, 61, 64]];
     const ARP = [0, 2, 4, 3, 5, 3, 4, 2];
     const BPM = { 1: 72, 2: 80, 3: 88 };
@@ -736,6 +763,90 @@ kbd { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border-radius
       setTier(n) { tier = n; }
     };
   })();
+
+  /* Background music: one looping MP3 per tier in assets/sounds/, crossfaded when the tier changes.
+     1) Web Audio buffers (gapless loops) when the page is served from a website or local server;
+     2) <audio loop> elements when opened straight from disk (browsers block fetch() on file://);
+     3) the built-in generated soundtrack above if the MP3 files are missing. */
+  const MUSIC_FILES = { 1: "assets/sounds/music-trick.mp3", 2: "assets/sounds/music-treat.mp3", 3: "assets/sounds/music-nightmare.mp3" };
+  const MUSIC_VOLUME = 0.45, FADE = 1.5;
+  const music = (() => {
+    // Opened straight from disk: skip fetch() (browsers block it there) and use <audio> elements.
+    let mode = location.protocol === "file:" ? "element" : "buffer", playing = false, tier = 1, bus = null, cur = null, curEl = null;
+    const loading = {}, els = {};
+    function loadBuffer(n) {
+      if (!loading[n]) loading[n] = fetch(MUSIC_FILES[n])
+        .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.arrayBuffer(); })
+        .then((data) => new Promise((res, rej) => actx.decodeAudioData(data, res, rej)));
+      return loading[n];
+    }
+    function fadeNode(track, secs) {
+      if (!track) return;
+      try { const t = actx.currentTime; track.gain.gain.cancelScheduledValues(t); track.gain.gain.setValueAtTime(track.gain.gain.value, t);
+        track.gain.gain.linearRampToValueAtTime(0.0001, t + secs); track.src.stop(t + secs + 0.05); } catch (e) {}
+    }
+    function fadeEl(a, to, secs, done) {
+      const from = a.volume, t0 = performance.now();
+      (function step(now) {
+        const k = Math.min(1, (now - t0) / (secs * 1000)); a.volume = Math.max(0, Math.min(1, from + (to - from) * k));
+        if (k < 1) requestAnimationFrame(step); else if (done) done();
+      })(t0);
+    }
+    function toSynth() {
+      mode = "synth";
+      if (curEl) { curEl.pause(); curEl = null; }
+      if (playing) { synthMusic.setTier(tier); synthMusic.start(); }
+    }
+    function playTier(n) {
+      if (!playing) return;
+      if (mode === "buffer") {
+        if (cur && cur.tier === n) return;
+        loadBuffer(n).then((buffer) => {
+          if (!playing || tier !== n || (cur && cur.tier === n) || mode !== "buffer") return;
+          if (!bus) { bus = actx.createGain(); bus.gain.value = MUSIC_VOLUME; bus.connect(actx.destination); }
+          const t = actx.currentTime, src = actx.createBufferSource(), gain = actx.createGain();
+          src.buffer = buffer; src.loop = true;
+          gain.gain.setValueAtTime(0.0001, t); gain.gain.linearRampToValueAtTime(1, t + FADE);
+          src.connect(gain).connect(bus); src.start(t);
+          fadeNode(cur, FADE); cur = { src, gain, tier: n };
+        }).catch(() => { if (mode === "buffer") { mode = "element"; playTier(tier); } });
+      } else if (mode === "element") {
+        let a = els[n];
+        if (!a) {
+          a = els[n] = new Audio(MUSIC_FILES[n]); a.loop = true; a.preload = "auto";
+          a.addEventListener("error", () => { if (mode === "element") toSynth(); });
+        }
+        if (curEl === a) return;
+        const prev = curEl; curEl = a;
+        a.volume = 0; a.currentTime = 0;
+        const p = a.play(); if (p && p.catch) p.catch(() => {});
+        fadeEl(a, MUSIC_VOLUME, FADE);
+        if (prev) fadeEl(prev, 0, FADE, () => { if (prev !== curEl) prev.pause(); });
+      }
+    }
+    return {
+      get playing() { return playing; },
+      start() {
+        if (playing) return;
+        if (!getCtx()) mode = mode === "buffer" ? "element" : mode;
+        playing = true;
+        if (mode === "synth") { synthMusic.setTier(tier); synthMusic.start(); return; }
+        playTier(tier);
+        if (mode === "buffer") [1, 2, 3].forEach((n) => loadBuffer(n).catch(() => {})); // warm up the other tiers
+      },
+      stop() {
+        if (!playing) return;
+        playing = false;
+        if (mode === "synth") return synthMusic.stop();
+        fadeNode(cur, 0.6); cur = null;
+        if (curEl) { const a = curEl; curEl = null; fadeEl(a, 0, 0.6, () => a.pause()); }
+      },
+      setTier(n) {
+        tier = n;
+        if (mode === "synth") synthMusic.setTier(n); else playTier(n);
+      }
+    };
+  })();
   const NOTE = "M12 3v10.55A4 4 0 1 0 14 17V7h4V3z";
   function syncMusic() { if (musicOn && !muted) music.start(); else music.stop(); renderMusic(); }
   function renderMusic() {
@@ -759,7 +870,25 @@ kbd { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border-radius
       freqs.forEach((f) => { const o = actx.createOscillator(), g = actx.createGain(); o.type = type; o.frequency.value = f; g.gain.setValueAtTime(gain, t); g.gain.exponentialRampToValueAtTime(.0001, t + dur); o.connect(g).connect(actx.destination); o.start(t); o.stop(t + dur); t += dur * .8; });
     } catch (e) {}
   }
-  const sfx = { good: () => tone([523, 784], .14, "triangle"), bad: () => tone([220, 147], .22, "sawtooth", .04), badge: () => tone([659, 784, 1047], .12, "triangle"), tier: () => tone([110, 98, 82], .35, "sawtooth", .035) };
+  const SYNTH_SFX = { good: () => tone([523, 784], .14, "triangle"), bad: () => tone([220, 147], .22, "sawtooth", .04), badge: () => tone([659, 784, 1047], .12, "triangle"), tier: () => tone([110, 98, 82], .35, "sawtooth", .035) };
+  /* Sound effects: MP3 files in assets/sounds/, with the synth tones above as a fallback. */
+  const SFX_FILES = { good: "assets/sounds/correct.mp3", bad: "assets/sounds/wrong.mp3", badge: "assets/sounds/badge.mp3", tier: "assets/sounds/tier-up.mp3" };
+  const SFX_VOLUME = 0.8, sfxAudio = {};
+  for (const [k, src] of Object.entries(SFX_FILES)) {
+    const a = new Audio(src); a.preload = "auto";
+    a.addEventListener("error", () => { sfxAudio[k] = null; }); // missing file: use the synth tone
+    sfxAudio[k] = a;
+  }
+  function playSfx(k) {
+    if (muted) return;
+    const a = sfxAudio[k];
+    if (!a) return SYNTH_SFX[k]();
+    try {
+      const c = a.cloneNode(); c.volume = SFX_VOLUME;
+      const p = c.play(); if (p && p.catch) p.catch((e) => { if (!e || e.name !== "NotAllowedError") SYNTH_SFX[k](); });
+    } catch (e) { SYNTH_SFX[k](); }
+  }
+  const sfx = { good: () => playSfx("good"), bad: () => playSfx("bad"), badge: () => playSfx("badge"), tier: () => playSfx("tier") };
   function renderMute() {
     const b = $("mute"); b.textContent = "";
     b.append(svgIcon(muted ? "M4 9h4l5-4v14l-5-4H4zM16 9l5 6M21 9l-5 6" : "M4 9h4l5-4v14l-5-4H4zM16 8a5 5 0 0 1 0 8M18.5 5.5a8.5 8.5 0 0 1 0 13"));
@@ -945,7 +1074,7 @@ kbd { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border-radius
   }
   function toast(a) {
     sfx.badge();
-    const t = el("div", "toast"); const seal = el("div", "seal"); seal.append(svgIcon(ICONS[a.icon])); const txt = el("div"); txt.append(el("small", null, "Badge unlocked"), el("strong", null, a.name));
+    const t = el("div", "toast"); const seal = el("div", "seal"); fillSeal(seal, a, false); const txt = el("div"); txt.append(el("small", null, "Badge unlocked"), el("strong", null, a.name));
     t.append(seal, txt); $("toasts").append(t);
     setTimeout(() => { t.classList.add("out"); setTimeout(() => t.remove(), 450); }, 3200);
   }
@@ -987,7 +1116,7 @@ kbd { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border-radius
       const fresh = S.earned.includes(a.id) && profile.badges[a.id] && (Date.now() - profile.badges[a.id] < 10 * 60 * 1000) && S.earned.includes(a.id);
       const thisRun = S.earned.includes(a.id), ever = !!profile.badges[a.id];
       const b = el("div", "badge" + (thisRun ? " fresh" : "") + (!ever ? " locked" : ""));
-      const seal = el("div", "seal" + (!ever ? " locked" : thisRun ? "" : " past")); seal.append(svgIcon(ICONS[a.icon]));
+      const seal = el("div", "seal" + (!ever ? " locked" : thisRun ? "" : " past")); fillSeal(seal, a, !ever);
       if (thisRun) seal.style.animationDelay = (i * 0.08) + "s";
       const txt = el("div"); if (thisRun) txt.append(el("em", null, "Earned this run")); else if (ever) txt.append(el("em", null, "Earned before"));
       txt.append(el("strong", null, a.name), el("span", null, a.desc));
