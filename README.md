@@ -55,6 +55,11 @@ Download `index.html` and open it in any modern browser. That's it.
 
 ## Team
 
+Paris Wright - Project Lead/Cybersecurity SME
+Anthony Bedont - FrontEnd Dev
+Jacob Tessmer - UI/UX Design
+Chris Lucas - Gameplay & testing
+
 Team 4 or Legion of Bozo's
 
 ## Hackathon
