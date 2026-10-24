@@ -23,11 +23,14 @@
   --r: 14px;
   --ease: cubic-bezier(.2,.8,.2,1);
 }
+html { -webkit-text-size-adjust: 100%; }
+img { max-width: 100%; }
 *, *::before, *::after { box-sizing: border-box; }
 /* Keep the HTML hidden attribute working even on elements styled with display:grid/flex. */
 [hidden] { display: none !important; }
 html, body { min-height: 100%; }
 body {
+  margin: 0;
   background: var(--night);
   color: var(--bone);
   font-family: var(--body);
@@ -76,7 +79,7 @@ kbd { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border-radius
 /* ---------- landing ---------- */
 .landing { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr); gap: 48px; align-items: center; padding-block: 4vh 2vh; }
 .brand { display: flex; align-items: center; gap: 18px; }
-.brand img { width: 92px; height: auto; flex: none; filter: drop-shadow(0 0 24px rgba(139,92,246,.5)); }
+.brand img { width: 120px; margin-right: -14px; height: auto; flex: none; filter: drop-shadow(0 0 24px rgba(139,92,246,.5)); }
 .wordmark { font-family: var(--display); font-weight: 400; font-size: clamp(54px, 8vw, 104px); line-height: .9; margin: 0;
   color: var(--pumpkin); text-shadow: 0 0 28px rgba(255,122,26,.35), 0 4px 0 var(--haze-deep); animation: flicker 7s infinite; }
 .wordmark span { color: var(--bone); }
@@ -124,6 +127,10 @@ kbd { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border-radius
 @keyframes pop { 50% { transform: scale(1.25); color: var(--ember); } }
 .icon-btn { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--crypt); border: 1px solid var(--line); cursor: pointer; }
 .icon-btn svg { width: 18px; height: 18px; }
+.icon-btn.off { opacity: .45; }
+.btn svg { width: 18px; height: 18px; flex: none; }
+#music-landing[aria-pressed="true"] { border-color: var(--pumpkin); color: var(--ember); }
+#music-landing[aria-pressed="true"] svg { animation: float 1.6s ease-in-out infinite; }
 
 .progress-wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-bottom: 18px; }
 .progress-label { font-family: var(--mono); font-size: 13px; color: var(--ash); font-variant-numeric: tabular-nums; }
@@ -272,7 +279,7 @@ kbd { font-family: var(--mono); font-size: 12px; padding: 1px 7px; border-radius
   .moon { width: 80px; height: 80px; }
 }
 @media (max-width: 520px) {
-  .brand img { width: 64px; }
+  .brand img { width: 84px; }
   .story { padding: 20px; }
   .hrow { grid-template-columns: 62px minmax(0,1fr); }
   .headers, .mailbody, .subject { padding-left: 16px; padding-right: 16px; }
