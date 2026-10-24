@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 196" width="600" height="196">
+  <title>Haunted Inbox logo</title>
+  <!-- Wordmark font: Pirata One (free, Google Fonts, SIL Open Font License). Install it or keep this @import for browsers. -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pirata+One&amp;display=swap');
+    .wm { font-family: 'Pirata One', 'UnifrakturMaguntia', Georgia, serif; font-size: 104px; }
+  </style>
+  <g transform="translate(0,7) scale(1.4)">
+  <rect x="54" y="70" width="12" height="58" rx="3" fill="#352950"/>
+  <path d="M18 46a26 26 0 0 1 52 0v34H18z" fill="#261c3f" stroke="#8b5cf6" stroke-width="3"/>
+  <path d="M44 20h40a26 26 0 0 1 26 26v34H70V46a26 26 0 0 0-26-26z" fill="#1c1430" stroke="#8b5cf6" stroke-width="3"/>
+  <rect x="96" y="26" width="5" height="34" fill="#ff7a1a"/>
+  <path d="M101 26h16l-4 7 4 7h-16z" fill="#ff7a1a"/>
+  <path d="M44 62c0-14 8-26 20-26s20 12 20 26v20l-5-4-5 4-5-4-5 4-5-4-5 4-5-4-5 4z" fill="#f4eefc" opacity=".95" transform="translate(-26,-30)"/>
+  <ellipse cx="32" cy="34" rx="3" ry="4.5" fill="#09060f"/>
+  <ellipse cx="44" cy="34" rx="3" ry="4.5" fill="#09060f"/>
+  <ellipse cx="38" cy="43" rx="3.5" ry="2.5" fill="#09060f"/>
+  <rect x="24" y="56" width="40" height="22" rx="3" fill="#ff7a1a" transform="rotate(-8 44 67)"/>
+  <path d="M25 58l19 11 19-14" fill="none" stroke="#1a0b00" stroke-width="2.5" transform="rotate(-8 44 67)"/>
+  </g>
+  <g class="wm">
+    <text x="196" y="92" fill="#3b1a78">Haunted</text>
+    <text x="196" y="186" fill="#3b1a78">Inbox</text>
+    <text x="196" y="88" fill="#ff7a1a">Haunted</text>
+    <text x="196" y="182" fill="#f4eefc">Inbox</text>
+  </g>
+</svg>
