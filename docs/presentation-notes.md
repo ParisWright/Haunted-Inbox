@@ -49,15 +49,13 @@ Nine techniques across 18 emails:
 ## 5. How it's built (1 min)
 
 - Plain **HTML, CSS and JavaScript**: no frameworks, no build step, hosted free on **GitHub Pages**.
-- **Content is separated from code.** All emails live in `data/emails.json`, so adding a new scenario means editing data, not code.
-- **Code is split by responsibility:**
-  - `questions.js`: loads the question bank and picks emails by tier
-  - `scoring.js`: game rules (points, streak multiplier, speed bonus, tier changes, badges, ranks)
-  - `game.js`: everything on screen
+- **One page plus an assets folder.** `index.html` holds the page, styles, game code and all 18 emails. Our art, badge icons, background, font, sound effects and music live in `assets/`.
+- **It never breaks in a demo.** Every asset has a built-in backup: if a file can't load, the game draws that icon or generates that sound itself.
+- **Content is data.** Every email is an object with its sender, links, red flags (`cues`) and lesson, so adding a scenario means adding data, not new code.
 - **Adaptive difficulty:** 3 right in a row → harder tier; 2 wrong → easier tier.
+- **Scoring:** tier × 100 base points, ×1.5 / ×2 streak multipliers, up to +50 speed bonus.
 - **Saved progress:** best score and badges stored in the browser's `localStorage`.
-- **Sound effects** are four small MP3 files in `assets/sounds/` (correct, wrong, badge, tier-up), mapped in one place in `game.js` so they're easy to swap.
-- **Background music:** an original music-box soundtrack with one seamless MP3 loop per tier (`assets/sounds/music-*.mp3`). The game crossfades to a faster, spookier loop as the difficulty rises; Nightmare adds a theremin.
+- **Sound and music:** four sound-effect MP3s and one music loop per difficulty tier in `assets/sounds/`. The music crossfades to a faster, spookier loop as the tier rises; Nightmare adds a theremin.
 - **Accessibility:** full keyboard play, screen-reader labels, reduced-motion support, works on phones.
 
 ## 6. Wrap-up (30 s)
@@ -73,6 +71,5 @@ Nine techniques across 18 emails:
 
 **Why not just block phishing with filters?** Filters catch most of it, but attackers specifically design emails that slip through (real services, no links, QR codes). People are the last line of defense.
 
-**How do you add questions?** Add an object to `data/emails.json` with the email content, the red flags (`cues`) and a lesson. The README documents the format.
+**How do you add questions?** Add an object to the `EMAILS` list in `index.html` with the email content, the red flags (`cues`) and a lesson.
 
-**Why does it say it can't load when I double-click the file?** Browsers block reading local JSON files from `file://`. Use GitHub Pages or `python3 -m http.server`.
