@@ -13,7 +13,7 @@ HTML
 CSS
 JavaScript
 
-Team Legion of Bozo's
+Team 4 or Legion of Bozo's
 
 Hackathon
 Stark State College Halloween Hackathon 2026
