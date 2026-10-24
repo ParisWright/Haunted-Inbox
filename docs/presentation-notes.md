@@ -1,141 +1,78 @@
-Haunted Inbox Presentation Notes
-Project Information
-Project: Haunted Inbox Team Name: Legion of Bozo's Hackathon: Stark State Halloween Hackathon 2026
+# Haunted Inbox: Presentation Notes
 
-Emergency 90-Second Demo
-State the problem.
-Show landing page.
-Analyze one phishing email.
-Show educational feedback.
-Jump to results screen.
-Show achievements.
-Deliver closing statement.
+Talking points for a 5–7 minute demo. Times are approximate.
 
-Elevator Pitch (15 Seconds)
-Haunted Inbox is a Halloween-themed cybersecurity awareness game that helps students identify phishing attacks, scams, and other online threats through interactive challenges, educational feedback, and engaging gameplay.
+---
 
-Problem
-Students receive suspicious emails, scam messages, fake job offers, and phishing attempts every day.
+## 1. The hook (30 s)
 
-Most cybersecurity training is boring, passive, and often ignored.
+- Open on the landing screen.
+- "Phishing is still how most attacks begin. A single click on the wrong email can lead to a stolen password, a ransomware infection or a fraudulent wire transfer."
+- "Haunted Inbox turns spotting phishing into a quick Halloween game: 12 emails, 3 hearts, about 4 minutes."
 
-As a result, many students don't know how to recognize threats before becoming victims.
+## 2. The problem (45 s)
 
-Solution
-Haunted Inbox transforms cybersecurity awareness into an interactive game.
+- Most security training is a slideshow people click through without reading.
+- People learn faster when they **make a decision, get immediate feedback, and see why**.
+- Real attacks aren't always obvious. The hard ones use lookalike domains, real services and real-sounding requests.
 
-Players investigate emails, identify warning signs, defeat cyber monsters, and learn practical cybersecurity skills through instant feedback.
+## 3. Live demo (2–3 min)
 
-Demo Flow
-Step 1: Landing Page
-Talk Track:
+1. **Begin Investigation.** Point out the HUD: hearts, score, streak, tier.
+2. **First email** (Tier 1). Walk through the inspection checklist on the right. Hover a link to show the real destination in the status bar.
+3. **Make a call.** Show the feedback panel: the red flags get **numbered and highlighted on the email itself**, plus a one-line lesson.
+4. **Show a safe email.** Stress that over-flagging is also a mistake: "Calm Nerves" is a badge for zero false alarms.
+5. **Tier up.** After 3 correct, the banner appears ("The haunting intensifies") and the emails get harder:
+   - `hoIlowcreek.com` with a capital I
+   - `rnailvault.com`, where "rn" looks like "m"
+   - A Reply-To that quietly sends your reply somewhere else
+6. **Results screen.** Rank, accuracy, false negatives vs false positives, badges, and a case review of every email.
 
-"Users begin their investigation by entering the Haunted Inbox training center."
+> Demo tip: use the keyboard (← / → / Enter) to keep it fast. Mute the sound if the room is quiet.
 
-Show:
+## 4. What it teaches (45 s)
 
-Title screen
-Halloween theme
-Start button
-Click:
+Nine techniques across 18 emails:
 
-Begin Investigation
+- Urgency / threats
+- Lookalike domains
+- Mismatched link text vs destination
+- Double-extension attachments (`.pdf.exe`)
+- Spoofed sender with a redirected Reply-To
+- Business email compromise (gift cards, bank-detail changes)
+- CEO fraud
+- Abuse of legitimate file-sharing services
+- QR-code phishing ("quishing")
 
-Step 2: First Email
-Talk Track:
+**The one habit to remember:** *Don't trust the email; go to the site or person through a channel you already know.*
 
-"This email claims the student's account will be disabled unless they act immediately."
+## 5. How it's built (1 min)
 
-Point Out:
+- Plain **HTML, CSS and JavaScript**: no frameworks, no build step, hosted free on **GitHub Pages**.
+- **Content is separated from code.** All emails live in `data/emails.json`, so adding a new scenario means editing data, not code.
+- **Code is split by responsibility:**
+  - `questions.js`: loads the question bank and picks emails by tier
+  - `scoring.js`: game rules (points, streak multiplier, speed bonus, tier changes, badges, ranks)
+  - `game.js`: everything on screen
+- **Adaptive difficulty:** 3 right in a row → harder tier; 2 wrong → easier tier.
+- **Saved progress:** best score and badges stored in the browser's `localStorage`.
+- **Sound effects** are four small MP3 files in `assets/sounds/` (correct, wrong, badge, tier-up), mapped in one place in `game.js` so they're easy to swap.
+- **Background music:** an original music-box soundtrack with one seamless MP3 loop per tier (`assets/sounds/music-*.mp3`). The game crossfades to a faster, spookier loop as the difficulty rises; Nightmare adds a theremin.
+- **Accessibility:** full keyboard play, screen-reader labels, reduced-motion support, works on phones.
 
-Suspicious sender
-Urgent language
-Credential request
-Select:
+## 6. Wrap-up (30 s)
 
-Suspicious
+- Next steps: more emails, a timer mode, a team leaderboard, translations.
+- Invite the audience to play: share the GitHub Pages link or a QR code to it (and make the point that **you should check where a QR code goes before scanning one**).
 
-Step 3: Feedback
-Talk Track:
+---
 
-"Rather than simply marking answers right or wrong, the application explains why."
+## Likely questions
 
-Show:
+**Are the links real?** No. Every company, person and domain is fictional, and links never navigate. Hovering only shows the destination.
 
-Correct answer
-Explanation
-Threat type
-Points earned
-Step 4: Harder Example
-Talk Track:
+**Why not just block phishing with filters?** Filters catch most of it, but attackers specifically design emails that slip through (real services, no links, QR codes). People are the last line of defense.
 
-"As players progress, threats become more realistic and difficult to identify."
+**How do you add questions?** Add an object to `data/emails.json` with the email content, the red flags (`cues`) and a lesson. The README documents the format.
 
-Show:
-
-Advanced phishing email
-
-Select answer.
-
-Step 5: Results Screen
-Talk Track:
-
-"At the end, players receive a final score, ranking, and cybersecurity recommendations."
-
-Show:
-
-Score
-Accuracy
-Rank
-Achievements
-Technical Highlights
-Interactive game logic
-Dynamic question database
-Scoring engine
-Progress tracking
-Achievement system
-Responsive interface
-Local storage support
-Educational Value
-Students learn how to:
-
-Identify phishing attempts
-Recognize social engineering
-Verify sender information
-Spot suspicious links
-Develop safer online habits
-Why Halloween?
-Cybersecurity and Halloween share a common theme:
-
-Identifying hidden threats before they cause harm.
-
-The Halloween setting creates an engaging experience while supporting the educational goals of the project.
-
-Future Enhancements
-AI threat analysis
-QR code phishing detection
-SMS scam detection
-Multiplayer challenges
-School leaderboards
-Campus cybersecurity competitions
-Closing Statement
-Haunted Inbox transforms cybersecurity awareness from a boring training requirement into an engaging Halloween-themed adventure that teaches students practical skills they can use immediately in the real world.
-
-Thank you for your time.
-
-Judge Q&A
-Q: Who is the target audience?
-
-A: College students, but the platform could easily be adapted for K-12 education, employee awareness training, or community outreach programs.
-
-Q: What makes this different from traditional training?
-
-A: Traditional training is usually passive. Haunted Inbox uses gamification, storytelling, and immediate feedback to create an engaging learning experience.
-
-Q: How does this help students?
-
-A: Students learn to recognize phishing emails, scam messages, and social engineering tactics that they may encounter in real life.
-
-Q: What would you add with more time?
-
-A: AI-powered threat analysis, additional challenge types, social media scam detection, and multiplayer competitions.
+**Why does it say it can't load when I double-click the file?** Browsers block reading local JSON files from `file://`. Use GitHub Pages or `python3 -m http.server`.
