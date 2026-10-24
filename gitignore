@@ -1,0 +1,49 @@
+# Haunted Inbox: .gitignore
+# The game is a single static index.html, so this mainly keeps
+# system files, editor settings and stray local files out of the repo.
+
+# ---- Operating system files ----
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ---- Editors and IDEs ----
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# ---- Logs and temporary files ----
+*.log
+*.tmp
+*.bak
+tmp/
+temp/
+
+# ---- Node (only if you add tooling later) ----
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json.bak
+
+# ---- Local environment and secrets (never commit these) ----
+.env
+.env.*
+*.pem
+*.key
+
+# ---- Local exports you don't want to publish ----
+# Saved AI Threat Analyzer reports
+threat-report-*.txt
+# Scratch copies and backups of the game file
+*-backup.html
+*.old.html
