@@ -1,75 +1,75 @@
-# Haunted Inbox: Presentation Notes
+# Haunted Inbox: Cyber Defense Academy · Presentation Notes
 
 Talking points for a 5–7 minute demo. Times are approximate.
+
+**Before you present:** open <https://pariswright.github.io/Haunted-Inbox/>, turn **Judge Mode on**, leave **Music** and **Sound** on, and have a second tab ready with the **AI Threat Analyzer**.
 
 ---
 
 ## 1. The hook (30 s)
 
-- Open on the landing screen.
-- "Phishing is still how most attacks begin. A single click on the wrong email can lead to a stolen password, a ransomware infection or a fraudulent wire transfer."
-- "Haunted Inbox turns spotting phishing into a quick Halloween game: 12 emails, 3 hearts, about 4 minutes."
+- Open on the title screen with the music playing.
+- "Phishing is still how most attacks begin. One click on the wrong link can hand over a password, lock up files with ransomware, or send money to a scammer."
+- "Stark State's networks are cursed. Haunted Inbox is a Halloween game where students join the Cyber Defense Academy, cross five haunted regions, and defeat the monsters behind real cyber attacks."
 
 ## 2. The problem (45 s)
 
 - Most security training is a slideshow people click through without reading.
 - People learn faster when they **make a decision, get immediate feedback, and see why**.
-- Real attacks aren't always obvious. The hard ones use lookalike domains, real services and real-sounding requests.
+- Students are a real target: fake financial aid, student portal logins, package texts, job offers and "IT support" calls. Every challenge in the game is a Stark State-style scenario.
 
 ## 3. Live demo (2–3 min)
 
-1. **Begin Investigation.** Point out the HUD: hearts, score, streak, tier.
-2. **First email** (Tier 1). Walk through the inspection checklist on the right. Hover a link to show the real destination in the status bar.
-3. **Make a call.** Show the feedback panel: the red flags get **numbered and highlighted on the email itself**, plus a one-line lesson.
-4. **Show a safe email.** Stress that over-flagging is also a mistake: "Calm Nerves" is a badge for zero false alarms.
-5. **Tier up.** After 3 correct, the banner appears ("The haunting intensifies") and the emails get harder:
-   - `hoIlowcreek.com` with a capital I
-   - `rnailvault.com`, where "rn" looks like "m"
-   - A Reply-To that quietly sends your reply somewhere else
-6. **Results screen.** Rank, accuracy, false negatives vs false positives, badges, and a case review of every email.
+1. **Story Mode.** Click **Begin**. Show a few lines of the opening scene with **Dr. Ada Lantern**, **SENTRY** (the Academy's AI) and **Maya Ortiz**, then skip.
+2. **World map.** Five regions, each teaching a different attack. Point out the campus infection meter and the boss waiting at the end of each region.
+3. **One or two challenges in Region 1 (Haunted Inbox).**
+   - Show a **Verdict** (Safe or Suspicious) and a **Link X-ray** (hover to see where a link really goes).
+   - Make a call and show the feedback: red flags highlighted on the message, a lesson, and a **real-world tip**.
+4. **Boss battle.** With Judge Mode on, click **Skip to boss** to fight **Count Phishula**. Play **indicator cards** for the threats you can see in the attack. A wrong card lets the boss strike back, and three hits in a row land a **critical**.
+5. **The finale (optional, if time).** In Region 5 the last boss, **Lord Ransomwrath**, ends with an **incident-response showdown**: play the right response actions in the right order.
+6. **AI Threat Analyzer.** Paste a real-looking scam (or click a sample). It returns a 0–100 threat score, names the "monster" behind it, and lists every warning sign. "It runs entirely in the browser, so nothing you paste is sent anywhere."
 
-> Demo tip: use the keyboard (← / → / Enter) to keep it fast. Mute the sound if the room is quiet.
+> Demo tips: Judge Mode unlocks every region and adds "Skip to boss". Press **Esc** to skip a story scene.
 
 ## 4. What it teaches (45 s)
 
-Nine techniques across 18 emails:
+| Region | Attack | Boss |
+|---|---|---|
+| 1. Haunted Inbox | Phishing emails | Count Phishula |
+| 2. Dark Web Woods | Social engineering | Hexa the Manipulator |
+| 3. Malware Marsh | Malware and unsafe downloads | Malware Maximus |
+| 4. Phantom Signal Tower | Text scams and mobile security | Specter Scamshade |
+| 5. Crypt of Compromise | Spear phishing, business email compromise, ransomware | Lord Ransomwrath |
 
-- Urgency / threats
-- Lookalike domains
-- Mismatched link text vs destination
-- Double-extension attachments (`.pdf.exe`)
-- Spoofed sender with a redirected Reply-To
-- Business email compromise (gift cards, bank-detail changes)
-- CEO fraud
-- Abuse of legitimate file-sharing services
-- QR-code phishing ("quishing")
+- **30 challenges** in six formats: Verdict, Flag Hunt, Link X-ray, Scenario, Thread (chat conversations) and Triage (files and permissions).
+- Safe examples are mixed in, because flagging everything is also a mistake.
 
-**The one habit to remember:** *Don't trust the email; go to the site or person through a channel you already know.*
+**The one habit to remember:** *Don't trust the message. Go to the site or the person through a channel you already know.*
 
 ## 5. How it's built (1 min)
 
-- Plain **HTML, CSS and JavaScript**: no frameworks, no build step, hosted free on **GitHub Pages**.
-- **One page plus an assets folder.** `index.html` holds the page, styles, game code and all 18 emails. Our art, badge icons, background, font, sound effects and music live in `assets/`.
-- **It never breaks in a demo.** Every asset has a built-in backup: if a file can't load, the game draws that icon or generates that sound itself.
-- **Content is data.** Every email is an object with its sender, links, red flags (`cues`) and lesson, so adding a scenario means adding data, not new code.
-- **Adaptive difficulty:** 3 right in a row → harder tier; 2 wrong → easier tier.
-- **Scoring:** tier × 100 base points, ×1.5 / ×2 streak multipliers, up to +50 speed bonus.
-- **Saved progress:** best score and badges stored in the browser's `localStorage`.
-- **Sound and music:** four sound-effect MP3s and one music loop per difficulty tier in `assets/sounds/`. The music crossfades to a faster, spookier loop as the tier rises; Nightmare adds a theremin.
-- **Accessibility:** full keyboard play, screen-reader labels, reduced-motion support, works on phones.
+- One `index.html` file: plain **HTML, CSS and JavaScript**, no frameworks or build tools, hosted free on **GitHub Pages**.
+- **All artwork is original SVG**, and the **music and sound effects are generated live** with the Web Audio API. The soundtrack intensifies in boss battles.
+- **Progression:** XP, six ranks (Cyber Rookie to Campus Defender), HP, up to 3 stars per region and 24 achievements, all saved in the browser.
+- **AI Threat Analyzer:** a rule-based detector that scores a message from 0–100 using phishing indicators like password requests, lookalike domains and pressure language.
+- **Built with AI assistance:** we designed the game, the scenarios and the art direction, and used Claude to help write the code.
+- Works on phones, supports the keyboard, and respects reduced-motion settings.
 
 ## 6. Wrap-up (30 s)
 
-- Next steps: more emails, a timer mode, a team leaderboard, translations.
-- Invite the audience to play: share the GitHub Pages link or a QR code to it (and make the point that **you should check where a QR code goes before scanning one**).
+- Next steps: more scenarios written by students, a class leaderboard for instructors, and Spanish and other translations.
+- Invite the judges to play on their phones with the link or a QR code to it, and point out the irony: **check where a QR code goes before you scan it.**
 
 ---
 
 ## Likely questions
 
-**Are the links real?** No. Every company, person and domain is fictional, and links never navigate. Hovering only shows the destination.
+**Are the links real?** No. Every person, company, domain and phone number in the challenges is fictional, and links in the game never open.
 
-**Why not just block phishing with filters?** Filters catch most of it, but attackers specifically design emails that slip through (real services, no links, QR codes). People are the last line of defense.
+**Is the "AI" analyzer really AI?** It's a rule-based detector that runs in the browser. It looks for the same red flags the game teaches and explains each one.
 
-**How do you add questions?** Add an object to the `EMAILS` list in `index.html` with the email content, the red flags (`cues`) and a lesson.
+**How long does a full playthrough take?** About 30–45 minutes for all five regions. Judge Mode gets you to any boss in under a minute.
 
+**How do you add a challenge?** Each challenge is a data object in the `CONTENT` section of `index.html`, with the message, its red flags, a lesson and a tip.
+
+**Why a game instead of a training video?** Every decision gets instant feedback that shows exactly what you missed, and the boss battles make players apply what they learned.
