@@ -12,7 +12,7 @@ Built With
 HTML
 CSS
 JavaScript
-Team
+
 Team Legion of Bozo's
 
 Hackathon
