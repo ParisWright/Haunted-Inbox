@@ -1,6 +1,6 @@
 # Haunted Inbox 👻📧
 
-**Play it:** [Haunted Inbox on GitHub Pages](https://pariswright.github.io/haunted-inbox/) <!-- Replace with your repo's GitHub Pages link if the repo name is different -->
+**Play it:** [Haunted Inbox on GitHub Pages](pariswright.github.io/Haunted-Inbox/) <!-- Replace with your repo's GitHub Pages link if the repo name is different -->
 
 ## Overview
 
