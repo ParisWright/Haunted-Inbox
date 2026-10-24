@@ -1,0 +1,672 @@
+[
+  {
+    "id": "e01",
+    "tier": 1,
+    "phish": true,
+    "from": [
+      "Mailvault Support",
+      "support@mailvault-secure-login.ru"
+    ],
+    "date": "Oct 31, 11:02 PM",
+    "subject": "URGENT!!! Your mailbox will be DELETED in 1 hour",
+    "body": [
+      "Dear User,",
+      "We detected unusual activity and your Mailvault mailbox will be permanently deleted in 60 minutes unless you verify your identity.",
+      "{link0} to keep your emails, contacts and files.",
+      "Mailvault Security Team"
+    ],
+    "links": [
+      {
+        "text": "Click here to verify now",
+        "href": "http://mailvault-verify-account.ru/login.php"
+      }
+    ],
+    "cues": [
+      [
+        "from",
+        "mailvault-secure-login.ru is not Mailvault's domain, and it sits on a foreign country-code domain."
+      ],
+      [
+        "subject",
+        "All caps and a one-hour deadline are there to rush you past careful thinking."
+      ],
+      [
+        "body",
+        "\"Dear User\" is a generic greeting. Your real provider knows your name."
+      ],
+      [
+        "link0",
+        "The link points to a .ru login page, not the real service."
+      ]
+    ],
+    "lesson": "Account-deletion threats with a tight deadline are the classic credential-harvesting opener. Open the service from your own bookmark instead of the email."
+  },
+  {
+    "id": "e02",
+    "tier": 1,
+    "phish": false,
+    "from": [
+      "Dana Ortiz",
+      "dana.ortiz@hollowcreek.com"
+    ],
+    "date": "Oct 31, 9:14 AM",
+    "subject": "Costume contest sign-up closes Friday",
+    "body": [
+      "Hi team,",
+      "The annual Hollow Creek costume contest is today at 3 PM in the break room. Prizes for scariest, funniest and best group costume.",
+      "Add your name on the events page: {link0}",
+      "No sign-up needed if you just want to come for the cider.",
+      "Dana, People & Culture"
+    ],
+    "links": [
+      {
+        "text": "intranet.hollowcreek.com/events/costume-2026",
+        "href": "https://intranet.hollowcreek.com/events/costume-2026"
+      }
+    ],
+    "cues": [
+      [
+        "from",
+        "Internal hollowcreek.com address from a named colleague."
+      ],
+      [
+        "link0",
+        "The link text and the real destination match, and both point at the company intranet."
+      ],
+      [
+        "body",
+        "No request for passwords, money or secrecy."
+      ]
+    ],
+    "lesson": "Not every email is a trap. An internal sender, a matching link and a low-stakes request add up to safe. Flagging everything buries the real alerts."
+  },
+  {
+    "id": "e03",
+    "tier": 1,
+    "phish": true,
+    "from": [
+      "PumpkinMart Rewards",
+      "winner@pumpkinmart-rewards.win"
+    ],
+    "date": "Oct 31, 10:21 PM",
+    "subject": "Congratulations! You WON a $500 PumpkinMart gift card",
+    "body": [
+      "Congratulation valued shopper!",
+      "You have been selected as our October grand prize winner. To receive your $500 gift card, simply pay the $4.99 shipping fee.",
+      "{link0}",
+      "Offer expires at midnight."
+    ],
+    "links": [
+      {
+        "text": "Claim my prize",
+        "href": "http://pumpkinmart-rewards.win/claim?card=1"
+      }
+    ],
+    "cues": [
+      [
+        "subject",
+        "You never entered a contest. A prize out of nowhere is too good to be true."
+      ],
+      [
+        "from",
+        "Sent from an odd .win domain, not a real store."
+      ],
+      [
+        "body",
+        "Real prizes never charge a fee. The $4.99 is a way to capture your card number."
+      ],
+      [
+        "link0",
+        "The claim link stays on the scam domain."
+      ]
+    ],
+    "lesson": "Prize scams trade a small fee for your full card details. Unexpected winnings plus a payment request is always a phish."
+  },
+  {
+    "id": "e04",
+    "tier": 1,
+    "phish": true,
+    "from": [
+      "Accounts Payable",
+      "billing@quickpay-invoices.biz"
+    ],
+    "date": "Oct 31, 8:40 PM",
+    "subject": "Overdue invoice #88213 - payment required",
+    "body": [
+      "Hello,",
+      "Please see the attached overdue invoice. Failure to pay within 24 hours will result in legal action.",
+      "Open the attachment to view the amount due.",
+      "Regards, Billing Dept."
+    ],
+    "attach": [
+      {
+        "name": "Invoice_88213.pdf.exe",
+        "size": "412 KB"
+      }
+    ],
+    "cues": [
+      [
+        "attach0",
+        "Double extension: .pdf.exe is a program dressed up as a PDF. Opening it runs malware."
+      ],
+      [
+        "from",
+        "An unknown billing company with no link to any Hollow Creek vendor."
+      ],
+      [
+        "body",
+        "Legal threats with a 24-hour clock are pressure, not process."
+      ]
+    ],
+    "lesson": "Malware often rides in attachments with hidden extensions. Real invoices come from vendors you know and are plain PDFs."
+  },
+  {
+    "id": "e05",
+    "tier": 1,
+    "phish": false,
+    "from": [
+      "IT Help Desk",
+      "it-helpdesk@hollowcreek.com"
+    ],
+    "date": "Oct 30, 4:05 PM",
+    "subject": "Planned email maintenance Saturday 2:00 to 4:00 AM",
+    "body": [
+      "Hi everyone,",
+      "We are upgrading the mail servers this Saturday from 2:00 to 4:00 AM. Email may be delayed during that window.",
+      "No action is required on your part. We will never ask for your password by email.",
+      "Questions? Call the help desk at ext. 4357."
+    ],
+    "cues": [
+      [
+        "from",
+        "Comes from the real internal help desk address."
+      ],
+      [
+        "body",
+        "Purely informational: no link, no login, no action required."
+      ],
+      [
+        "body",
+        "Gives a known internal phone extension so you can verify."
+      ]
+    ],
+    "lesson": "Legitimate IT notices inform you; they do not ask you to log in or hand over a password."
+  },
+  {
+    "id": "e06",
+    "tier": 1,
+    "phish": true,
+    "from": [
+      "PayLantern Billing",
+      "paylantern.support.team@gmail.com"
+    ],
+    "date": "Oct 31, 11:15 PM",
+    "subject": "Your acount has been limited",
+    "body": [
+      "Dear Costumer,",
+      "We have limited your PayLantern acount because we could not verify you billing informations.",
+      "Please {link0} and enter your card details to restore acess.",
+      "Thank You, PayLantern"
+    ],
+    "links": [
+      {
+        "text": "login to PayLantern",
+        "href": "http://paylantern-restore.xyz/secure"
+      }
+    ],
+    "cues": [
+      [
+        "from",
+        "A payment company would never email you from a free Gmail address."
+      ],
+      [
+        "subject",
+        "Misspellings like \"acount\" are a common phishing tell."
+      ],
+      [
+        "body",
+        "\"Dear Costumer\" plus more errors and a request for card details."
+      ],
+      [
+        "link0",
+        "The link leads to paylantern-restore.xyz, not PayLantern."
+      ]
+    ],
+    "lesson": "Free webmail senders, sloppy spelling and a request for card details: three strikes on one email."
+  },
+  {
+    "id": "e07",
+    "tier": 2,
+    "phish": true,
+    "from": [
+      "IT Service Desk",
+      "servicedesk@hoIlowcreek.com"
+    ],
+    "date": "Oct 31, 10:58 PM",
+    "subject": "Password expires today",
+    "body": [
+      "Hello,",
+      "Your network password expires at 11:59 PM tonight. To avoid losing access to email and shared drives, keep your current password using the link below.",
+      "{link0}",
+      "IT Service Desk, Hollow Creek Logistics"
+    ],
+    "links": [
+      {
+        "text": "https://hollowcreek.com/password",
+        "href": "https://hollowcreek.com.password-keep.io/auth"
+      }
+    ],
+    "cues": [
+      [
+        "from",
+        "Look closely: hoIlowcreek uses a capital I in place of the first lowercase l."
+      ],
+      [
+        "link0",
+        "The real domain is password-keep.io. \"hollowcreek.com\" is just a prefix in front of it."
+      ],
+      [
+        "body",
+        "\"Keep your current password\" is not how real password expiry works."
+      ]
+    ],
+    "lesson": "Lookalike domains swap similar characters. Read sender addresses in a monospace view and check what comes right before the final .com."
+  },
+  {
+    "id": "e08",
+    "tier": 2,
+    "phish": false,
+    "from": [
+      "CloudBox",
+      "no-reply@cloudbox.com"
+    ],
+    "date": "Oct 31, 2:37 PM",
+    "subject": "Marcus Lee shared \"Q4 route plan.xlsx\" with you",
+    "body": [
+      "Marcus Lee (marcus.lee@hollowcreek.com) shared a file with you.",
+      "\"Here is the route plan we talked about in standup. -M\"",
+      "{link0}",
+      "You are receiving this because someone shared a file with you on CloudBox."
+    ],
+    "links": [
+      {
+        "text": "Open in CloudBox",
+        "href": "https://cloudbox.com/s/7Hq2-q4-route-plan"
+      }
+    ],
+    "cues": [
+      [
+        "from",
+        "Sent from the file service's own domain."
+      ],
+      [
+        "body",
+        "Shared by an internal colleague, and the note references a real conversation."
+      ],
+      [
+        "link0",
+        "The link stays on cloudbox.com, and the file is an ordinary spreadsheet."
+      ]
+    ],
+    "lesson": "A share is safe when the sharer is someone you know, the file is expected, and the link stays on the service's domain."
+  },
+  {
+    "id": "e09",
+    "tier": 2,
+    "phish": true,
+    "from": [
+      "Marcus Lee",
+      "marcus.lee@hollowcreek.com"
+    ],
+    "replyTo": "marcus.lee.hc@outlook-mail.net",
+    "date": "Oct 31, 11:21 PM",
+    "subject": "quick favor",
+    "body": [
+      "Are you at your desk? I am stuck in a client meeting and need a quick favor.",
+      "Can you pick up four $100 gift cards for a client thank-you? I will reimburse you today. Send me the codes when you have them.",
+      "Keep this between us for now, it is a surprise.",
+      "Sent from my phone"
+    ],
+    "cues": [
+      [
+        "replyTo",
+        "Replies go to an outside address, not Marcus's work email. The From line was spoofed."
+      ],
+      [
+        "body",
+        "Gift card codes work like untraceable cash. This is the textbook business email compromise ask."
+      ],
+      [
+        "body",
+        "Secrecy plus a \"sent from my phone\" excuse to explain the odd tone."
+      ]
+    ],
+    "lesson": "Business email compromise impersonates people you trust. Verify unusual money requests through a different channel, like a call."
+  },
+  {
+    "id": "e10",
+    "tier": 2,
+    "phish": true,
+    "from": [
+      "ParcelPost",
+      "notify@parcelpost-delivery.co"
+    ],
+    "date": "Oct 31, 9:49 PM",
+    "subject": "Your package is on hold: customs fee $1.99",
+    "body": [
+      "Your parcel PP-4471-092 could not be delivered because a customs fee of $1.99 is unpaid.",
+      "Pay now to schedule redelivery: {link0}",
+      "Unclaimed parcels are returned after 48 hours."
+    ],
+    "links": [
+      {
+        "text": "https://parcelpost.com/track",
+        "href": "http://parcelpost-redelivery.top/pay?id=4471"
+      }
+    ],
+    "cues": [
+      [
+        "link0",
+        "The visible text says parcelpost.com, but the link really goes to parcelpost-redelivery.top. Always hover first."
+      ],
+      [
+        "from",
+        "parcelpost-delivery.co is not the carrier's main domain."
+      ],
+      [
+        "body",
+        "A tiny fee and a 48-hour deadline lower your guard."
+      ]
+    ],
+    "lesson": "Link text can say anything. Only the real destination, shown when you hover, tells the truth."
+  },
+  {
+    "id": "e11",
+    "tier": 2,
+    "phish": false,
+    "from": [
+      "Payroll",
+      "payroll@hollowcreek.com"
+    ],
+    "date": "Oct 31, 7:00 AM",
+    "subject": "October pay statement is ready",
+    "body": [
+      "Hi,",
+      "Your October pay statement is now available in the employee portal.",
+      "Sign in the way you normally do from your bookmarked portal. For your security, this email does not contain a link.",
+      "Payroll Team, Hollow Creek Logistics"
+    ],
+    "cues": [
+      [
+        "from",
+        "Internal payroll address on the real company domain."
+      ],
+      [
+        "body",
+        "Deliberately has no link and tells you to use your own bookmark."
+      ],
+      [
+        "body",
+        "No deadline, no threat, no request for information."
+      ]
+    ],
+    "lesson": "Good security teams design emails like this one: they point you to a place you already trust instead of a link."
+  },
+  {
+    "id": "e12",
+    "tier": 2,
+    "phish": true,
+    "from": [
+      "Mailvault Security",
+      "security@rnailvault.com"
+    ],
+    "date": "Oct 31, 11:33 PM",
+    "subject": "Sign-in blocked from new device",
+    "body": [
+      "We blocked a sign-in attempt to your account from Bucharest, Romania (Chrome on Windows).",
+      "If this was not you, secure your account immediately: {link0}",
+      "Mailvault Security"
+    ],
+    "links": [
+      {
+        "text": "Secure my account",
+        "href": "https://rnailvault.com/secure/verify"
+      }
+    ],
+    "cues": [
+      [
+        "from",
+        "\"rn\" side by side looks like \"m\". rnailvault.com is not mailvault.com."
+      ],
+      [
+        "link0",
+        "The secure link goes to the same lookalike domain."
+      ],
+      [
+        "body",
+        "Uses fear of an attacker to get you to log in on the attacker's own page."
+      ]
+    ],
+    "lesson": "Fake security alerts weaponize your caution. Check the domain letter by letter before acting."
+  },
+  {
+    "id": "e13",
+    "tier": 3,
+    "phish": true,
+    "from": [
+      "Elena Park",
+      "elena.park@grimwoodsupply.com"
+    ],
+    "replyTo": "accounts@grimwood-supply.com",
+    "date": "Oct 31, 4:12 PM",
+    "subject": "RE: PO 4471 - updated remittance details",
+    "body": [
+      "Hi,",
+      "Following up on PO 4471 for the pallet wrap order. Our bank has moved us to a new account, so please update our remittance details before Friday's payment run. New details are in the attached letter.",
+      "Please confirm by reply once updated so we do not delay your shipment.",
+      "Thanks, Elena Park, Accounts Receivable, Grimwood Supply"
+    ],
+    "attach": [
+      {
+        "name": "Grimwood_bank_change_letter.pdf",
+        "size": "88 KB"
+      }
+    ],
+    "cues": [
+      [
+        "body",
+        "Changing bank details by email is the top invoice-fraud move. Verify by phone using a number you already have."
+      ],
+      [
+        "replyTo",
+        "Replies go to grimwood-supply.com, with a hyphen, not grimwoodsupply.com."
+      ],
+      [
+        "subject",
+        "\"RE:\" on a thread that never existed makes it feel like an ongoing conversation."
+      ],
+      [
+        "body",
+        "A real PO number and a payment-run deadline add credibility and pressure."
+      ]
+    ],
+    "lesson": "Spear phishing borrows real details like a purchase order. The giveaway is the action it wants: changing where money goes."
+  },
+  {
+    "id": "e14",
+    "tier": 3,
+    "phish": false,
+    "from": [
+      "Mailvault",
+      "no-reply@accounts.mailvault.com"
+    ],
+    "date": "Oct 31, 10:49 PM",
+    "subject": "New sign-in to your Mailvault account",
+    "body": [
+      "Your account was just used to sign in on a new device.",
+      "Device: Chrome on Windows · Location: Cleveland, OH · Time: Oct 31, 10:48 PM",
+      "If this was you, you can ignore this email. If not, review your recent activity: {link0}",
+      "Mailvault will never ask for your password in an email."
+    ],
+    "links": [
+      {
+        "text": "mailvault.com/security",
+        "href": "https://mailvault.com/security"
+      }
+    ],
+    "cues": [
+      [
+        "from",
+        "accounts.mailvault.com is a subdomain of the real mailvault.com."
+      ],
+      [
+        "link0",
+        "The link text matches the destination on the real domain."
+      ],
+      [
+        "body",
+        "Lets you ignore it if it was you. No threats and no deadline."
+      ]
+    ],
+    "lesson": "Real alerts look alarming too. This one is safe: the real domain, a matching link and no pressure. Visiting the site directly is still the best habit."
+  },
+  {
+    "id": "e15",
+    "tier": 3,
+    "phish": true,
+    "from": [
+      "CloudBox",
+      "no-reply@cloudbox.com"
+    ],
+    "date": "Oct 31, 11:40 PM",
+    "subject": "HR Department shared \"Bonus_Structure_2027.html\" with you",
+    "body": [
+      "HR Department (hr.department.hollowcreek@gmail.com) shared a file with you.",
+      "\"Confidential: please review your 2027 bonus before Monday. Sign in to view.\"",
+      "{link0}"
+    ],
+    "links": [
+      {
+        "text": "Open in CloudBox",
+        "href": "https://cloudbox.com/s/Bx9-bonus-2027"
+      }
+    ],
+    "cues": [
+      [
+        "body",
+        "The sharer is a Gmail account pretending to be HR."
+      ],
+      [
+        "subject",
+        "An .html file can render a fake login page right inside the share."
+      ],
+      [
+        "body",
+        "Bonus bait, \"confidential\" and \"sign in to view\" are the hook."
+      ]
+    ],
+    "lesson": "Attackers abuse real services so the sender and link look clean. Check who actually shared the file and what kind of file it is."
+  },
+  {
+    "id": "e16",
+    "tier": 3,
+    "phish": true,
+    "from": [
+      "Victor Hale, CEO",
+      "v.hale@hollowcreek-exec.com"
+    ],
+    "date": "Oct 31, 11:44 PM",
+    "subject": "Confidential: acquisition, need your help tonight",
+    "body": [
+      "I need you to handle something discreetly. We are closing an acquisition tonight and legal needs a $48,500 wire sent before midnight.",
+      "Do not discuss this with anyone else until the announcement. I am boarding a flight and cannot take calls.",
+      "Reply and I will send the wiring instructions.",
+      "Victor"
+    ],
+    "cues": [
+      [
+        "from",
+        "hollowcreek-exec.com is not the company domain."
+      ],
+      [
+        "body",
+        "Secrecy, executive authority and an unreachable sender are the CEO-fraud trifecta."
+      ],
+      [
+        "body",
+        "A large wire outside the normal approval process."
+      ]
+    ],
+    "lesson": "CEO fraud relies on authority and secrecy. Any urgent wire request gets verified with a second person, every time."
+  },
+  {
+    "id": "e17",
+    "tier": 3,
+    "phish": false,
+    "from": [
+      "Elena Park",
+      "elena.park@grimwoodsupply.com"
+    ],
+    "date": "Oct 25, 10:02 AM",
+    "subject": "Invoice INV-4471 for PO 4471",
+    "body": [
+      "Hi,",
+      "Attached is invoice INV-4471 for the pallet wrap delivered on Oct 24 under PO 4471. Payment terms are net 30 to the account already on file.",
+      "Let me know if anything does not match your receiving records.",
+      "Elena Park, Accounts Receivable, Grimwood Supply"
+    ],
+    "attach": [
+      {
+        "name": "INV-4471.pdf",
+        "size": "132 KB"
+      }
+    ],
+    "cues": [
+      [
+        "from",
+        "Matches the vendor's real domain, with no reply-to redirect."
+      ],
+      [
+        "body",
+        "Payment goes to the account already on file. Nothing changes."
+      ],
+      [
+        "attach0",
+        "A plain PDF that matches a known purchase order."
+      ]
+    ],
+    "lesson": "Compare this with the bank-change email from the same name. Same vendor, but this one asks for nothing unusual."
+  },
+  {
+    "id": "e18",
+    "tier": 3,
+    "phish": true,
+    "from": [
+      "IT Security",
+      "it-security@hollowcreek-support.com"
+    ],
+    "date": "Oct 31, 11:51 PM",
+    "subject": "Action required: re-enroll multi-factor authentication",
+    "body": [
+      "As part of our annual security review, all staff must re-enroll their MFA by end of day.",
+      "Scan the QR code below with your phone camera to begin. Do not use your work computer, as the enrollment page is mobile-only.",
+      "{qr}",
+      "IT Security, Hollow Creek Logistics"
+    ],
+    "cues": [
+      [
+        "from",
+        "hollowcreek-support.com is a lookalike, not hollowcreek.com."
+      ],
+      [
+        "body",
+        "QR codes hide the destination and move you to a phone outside company protections."
+      ],
+      [
+        "body",
+        "A same-day deadline and an unusual \"mobile-only\" instruction."
+      ]
+    ],
+    "lesson": "Quishing (QR phishing) dodges link scanners. Treat an unexpected QR code like an unexpected link."
+  }
+]
