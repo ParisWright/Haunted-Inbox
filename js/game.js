@@ -45,29 +45,126 @@
   let S = null;             // state of the current investigation
 
   /* ---------------- sound ----------------
-   * Effects are synthesized with the Web Audio API, so no audio files are
-   * needed. To use recorded sounds instead, drop files in assets/sounds/ and
-   * play them with new Audio("assets/sounds/<file>").play() inside sfx. */
-  let muted = false, actx = null;
-  function tone(freqs, dur = .12, type = "sine", gain = .06) {
-    if (muted) return;
+   * Sound effects are MP3 files in assets/sounds/. Swap any file for your own
+   * sound (keep the same name) and the game will play it. */
+  const SOUND_FILES = {
+    good: "assets/sounds/correct.mp3",   // correct answer
+    bad: "assets/sounds/wrong.mp3",      // wrong answer
+    badge: "assets/sounds/badge.mp3",    // achievement unlocked
+    tier: "assets/sounds/tier-up.mp3"    // difficulty tier goes up
+  };
+  const VOLUME = 0.8;
+  let muted = false;
+  const sounds = {};
+  for (const [key, src] of Object.entries(SOUND_FILES)) {
+    const a = new Audio(src);
+    a.preload = "auto";
+    sounds[key] = a;
+  }
+  function play(key) {
+    if (muted || !sounds[key]) return;
     try {
-      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
-      let t = actx.currentTime;
-      freqs.forEach((f) => {
-        const o = actx.createOscillator(), g = actx.createGain();
-        o.type = type; o.frequency.value = f;
-        g.gain.setValueAtTime(gain, t); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
-        o.connect(g).connect(actx.destination); o.start(t); o.stop(t + dur);
-        t += dur * .8;
-      });
+      // Clone so the same sound can overlap itself if triggered quickly.
+      const a = sounds[key].cloneNode();
+      a.volume = VOLUME;
+      const p = a.play();
+      if (p && p.catch) p.catch(() => {}); // ignore autoplay blocks / missing files
     } catch (e) {}
   }
+  /* ---------------- background music ----------------
+   * One looping MP3 per difficulty tier, in assets/sounds/. When the tier
+   * changes the game crossfades to that tier's track. The on/off choice is
+   * remembered. Loops are decoded with the Web Audio API so they repeat
+   * without a gap (an <audio loop> element leaves a small pause with MP3s). */
+  let actx = null, musicOn = true;
+  try { musicOn = localStorage.getItem("hauntedInbox:music") !== "off"; } catch (e) {}
+  function getCtx() {
+    try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); if (actx.state === "suspended") actx.resume(); } catch (e) { actx = null; }
+    return actx;
+  }
+
+  const MUSIC_FILES = {
+    1: "assets/sounds/music-trick.mp3",      // Tier 1 · Trick
+    2: "assets/sounds/music-treat.mp3",      // Tier 2 · Treat (a little faster, extra sparkle)
+    3: "assets/sounds/music-nightmare.mp3"   // Tier 3 · Nightmare (fastest, adds a theremin)
+  };
+  const MUSIC_VOLUME = 0.45;  // kept under the sound effects
+  const FADE = 1.5;           // seconds to crossfade between tiers
+
+  const music = (() => {
+    const loading = {};
+    let bus = null, cur = null, playing = false, tier = 1;
+    function load(n) {
+      if (!loading[n]) {
+        loading[n] = fetch(MUSIC_FILES[n])
+          .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.arrayBuffer(); })
+          .then((data) => new Promise((res, rej) => actx.decodeAudioData(data, res, rej)))
+          .catch((e) => { loading[n] = null; throw e; });
+      }
+      return loading[n];
+    }
+    function fadeOut(track, secs) {
+      if (!track) return;
+      try {
+        const t = actx.currentTime;
+        track.gain.gain.cancelScheduledValues(t);
+        track.gain.gain.setValueAtTime(track.gain.gain.value, t);
+        track.gain.gain.linearRampToValueAtTime(0.0001, t + secs);
+        track.src.stop(t + secs + 0.05);
+      } catch (e) {}
+    }
+    function playTier(n) {
+      if (!playing || (cur && cur.tier === n)) return;
+      load(n).then((buffer) => {
+        if (!playing || tier !== n || (cur && cur.tier === n)) return; // something changed while loading
+        const t = actx.currentTime, src = actx.createBufferSource(), gain = actx.createGain();
+        src.buffer = buffer; src.loop = true;
+        gain.gain.setValueAtTime(0.0001, t);
+        gain.gain.linearRampToValueAtTime(1, t + FADE);
+        src.connect(gain).connect(bus);
+        src.start(t);
+        fadeOut(cur, FADE);
+        cur = { src, gain, tier: n };
+      }).catch(() => {}); // missing file or opened from disk: just stay silent
+    }
+    return {
+      get playing() { return playing; },
+      start() {
+        if (playing) return;
+        const ctx = getCtx(); if (!ctx) return;
+        if (!bus) { bus = ctx.createGain(); bus.gain.value = MUSIC_VOLUME; bus.connect(ctx.destination); }
+        playing = true;
+        playTier(tier);
+        [1, 2, 3].forEach((n) => load(n).catch(() => {})); // warm up the other tiers
+      },
+      stop() {
+        if (!playing) return;
+        playing = false;
+        fadeOut(cur, 0.6); cur = null;
+      },
+      setTier(n) { tier = n; playTier(n); }
+    };
+  })();
+  const NOTE = "M12 3v10.55A4 4 0 1 0 14 17V7h4V3z";
+  function syncMusic() { if (musicOn && !muted) music.start(); else music.stop(); renderMusic(); }
+  function renderMusic() {
+    const b = $("music"); b.textContent = ""; b.append(svgIcon(NOTE)); b.classList.toggle("off", !musicOn);
+    b.setAttribute("aria-pressed", String(musicOn)); b.setAttribute("aria-label", musicOn ? "Turn music off" : "Turn music on");
+    const l = $("music-landing"); l.textContent = ""; l.append(svgIcon(NOTE), document.createTextNode(musicOn && music.playing ? "Music playing" : musicOn ? "Play music" : "Music off"));
+    l.setAttribute("aria-pressed", String(musicOn && music.playing));
+  }
+  function toggleMusic(forceOn) {
+    musicOn = forceOn === true ? true : !musicOn;
+    if (musicOn && muted) { muted = false; renderMute(); }
+    try { localStorage.setItem("hauntedInbox:music", musicOn ? "on" : "off"); } catch (e) {}
+    syncMusic();
+  }
+
   const sfx = {
-    good: () => tone([523, 784], .14, "triangle"),
-    bad: () => tone([220, 147], .22, "sawtooth", .04),
-    badge: () => tone([659, 784, 1047], .12, "triangle"),
-    tier: () => tone([110, 98, 82], .35, "sawtooth", .035)
+    good: () => play("good"),
+    bad: () => play("bad"),
+    badge: () => play("badge"),
+    tier: () => play("tier")
   };
   function renderMute() {
     const b = $("mute"); b.textContent = "";
@@ -96,6 +193,7 @@
   function startGame() {
     if (!EMAILS.length) return;
     S = HI.newState();
+    music.setTier(1); syncMusic();
     renderHearts(); updateHUD();
     show("game");
     loadEmail();
@@ -184,6 +282,7 @@
     S.locked = true;
     const e = S.current;
     const r = HI.scoreAnswer(S, e, guessPhish, performance.now() - S.shownAt);
+    music.setTier(S.tier);
 
     $("btn-safe").disabled = true; $("btn-sus").disabled = true;
     const w = $("mailwin"); w.classList.remove("in"); void w.offsetWidth;
@@ -279,6 +378,7 @@
   /* ---------------- end + results ---------------- */
   function endGame() {
     const completed = HI.isCompleted(S);
+    music.setTier(1);
     HI.badgesAtEnd(S, completed).forEach(earn);
     const prevBest = profile.best;
     profile.games++; profile.best = Math.max(profile.best, S.score); HI.saveProfile(profile);
@@ -361,7 +461,10 @@
   $("btn-safe").addEventListener("click", () => answer(false));
   $("btn-sus").addEventListener("click", () => answer(true));
   $("btn-next").addEventListener("click", next);
-  $("mute").addEventListener("click", () => { muted = !muted; renderMute(); });
+  $("mute").addEventListener("click", () => { muted = !muted; renderMute(); syncMusic(); });
+  $("music").addEventListener("click", () => toggleMusic());
+  $("music-landing").addEventListener("click", () => toggleMusic(musicOn && !music.playing ? true : undefined));
+  document.addEventListener("visibilitychange", () => { try { if (!actx) return; document.hidden ? actx.suspend() : actx.resume(); } catch (e) {} });
   document.addEventListener("keydown", (ev) => {
     if (!S || $("game").hidden || ev.metaKey || ev.ctrlKey || ev.altKey) return;
     if (ev.key === "ArrowLeft" && !S.locked) { ev.preventDefault(); answer(false); }
@@ -369,7 +472,7 @@
     else if (ev.key === "Enter" && S.locked && document.activeElement !== $("btn-next")) { ev.preventDefault(); next(); }
   });
 
-  buildChecklist(); renderMute(); renderRecords();
+  buildChecklist(); renderMute(); renderMusic(); renderRecords();
   HI.loadEmails("data/emails.json")
     .then((list) => { EMAILS = list; })
     .catch(showLoadError);
