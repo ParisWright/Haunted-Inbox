@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Haunted Inbox</title>
+  <meta name="description" content="A Halloween phishing-awareness game: sort the safe mail from the phish before midnight.">
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="sky" aria-hidden="true">
+  <div class="moon"></div>
+  <div class="fog"></div><div class="fog f2"></div>
+  <div class="wisp" style="left:6%;top:30%"><img src="assets/images/ghost.svg" alt=""></div>
+  <div class="wisp" style="left:46%;top:12%;width:22px;animation-delay:-3s"><img src="assets/images/ghost.svg" alt=""></div>
+  <div class="wisp" style="right:12%;top:62%;width:28px;animation-delay:-6s"><img src="assets/images/ghost.svg" alt=""></div>
+</div>
+
+<div id="app">
+  <!-- ================= LANDING ================= -->
+  <section id="landing" class="screen" aria-labelledby="logo-title">
+    <div class="landing">
+      <div>
+        <div class="brand">
+          <img src="assets/images/logo.svg" alt="" width="92" height="100">
+          <h1 class="wordmark" id="logo-title">Haunted<br><span>Inbox</span></h1>
+        </div>
+        <p class="tagline">A phishing-awareness game for the night shift. Sort the living mail from the dead before midnight.</p>
+        <div class="cta-row">
+          <button class="btn btn-primary" id="begin" type="button">
+            Begin Investigation
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <span style="color:var(--ash);font-size:14px">12 emails · 3 hearts · about 4 minutes</span>
+        </div>
+        <div class="records" id="records"></div>
+        <div class="notice" id="load-error" hidden></div>
+      </div>
+
+      <article class="story">
+        <span class="eyebrow">Case file · Hollow Creek Logistics SOC</span>
+        <h2>Something is writing from the other side</h2>
+        <p>It is <span class="timestamp">11:47 PM, October 31</span>. The security operations center is empty except for you and the hum of the mail server.</p>
+        <p>Messages keep arriving from colleagues who never sent them, vendors with the wrong spelling, and an "IT desk" at addresses nobody owns. Some of tonight's mail is real. Some of it wants your password, your payroll, or your wire transfer.</p>
+        <ol class="steps">
+          <li><span class="n">1</span><span><b>Inspect.</b> Check the sender address, reply-to, links and attachments. Hover a link to see where it really goes.</span></li>
+          <li><span class="n">2</span><span><b>Decide.</b> Mark each email Safe or Suspicious. Trust a phish or flag a real email and you lose a heart.</span></li>
+          <li><span class="n">3</span><span><b>Learn.</b> Every answer reveals the red flags. Get three right in a row and the haunting gets harder.</span></li>
+        </ol>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= GAME ================= -->
+  <section id="game" class="screen" hidden aria-label="Investigation">
+    <div class="topbar">
+      <button class="mini-brand" id="home-link" type="button" aria-label="Back to start">Haunted <span>Inbox</span></button>
+      <div class="hud">
+        <div class="hud-chip"><small>Hearts</small><div class="hearts" id="hearts" aria-live="polite"></div></div>
+        <div class="hud-chip"><small>Score</small><strong id="score">0</strong></div>
+        <div class="hud-chip"><small>Streak</small><strong id="streak">0</strong></div>
+        <button class="icon-btn" id="mute" type="button" aria-label="Mute sound" aria-pressed="false"></button>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <span class="progress-label" id="progress-label">Email 1 of 12</span>
+      <span class="tier-pill" id="tier-pill" data-tier="1">Tier 1 · Trick</span>
+      <div class="bar" role="progressbar" aria-label="Investigation progress" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0" id="bar"><i id="bar-fill"></i></div>
+    </div>
+
+    <div class="desk">
+      <div>
+        <article class="mailwin" id="mailwin" aria-live="polite">
+          <div class="chrome"><i></i><i></i><i></i><span>Inbox · you@hollowcreek.com · night shift</span></div>
+          <dl class="headers">
+            <div class="hrow"><dt>From</dt><dd class="flaggable" id="f-from"></dd></div>
+            <div class="hrow" id="row-replyTo"><dt>Reply-To</dt><dd class="flaggable" id="f-replyTo"></dd></div>
+            <div class="hrow"><dt>To</dt><dd><span class="addr">you@hollowcreek.com</span></dd></div>
+            <div class="hrow"><dt>Date</dt><dd id="f-date" class="addr"></dd></div>
+          </dl>
+          <h2 class="subject flaggable" id="f-subject"></h2>
+          <div class="mailbody flaggable" id="f-body"></div>
+          <div class="attachments" id="f-attach"></div>
+          <div class="statusbar" id="statusbar">Hover or tap a link to see where it really goes.</div>
+        </article>
+
+        <div class="verdicts" id="verdicts">
+          <button class="verdict v-safe" id="btn-safe" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M12 2l8 3v6c0 5-3.5 9.5-8 11-4.5-1.5-8-6-8-11V5zM8.5 12l2.5 2.5 4.5-5"/></svg>
+            Safe <kbd>←</kbd>
+          </button>
+          <button class="verdict v-sus" id="btn-sus" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M12 3l10 18H2zM12 10v5M12 18h.01"/></svg>
+            Suspicious <kbd>→</kbd>
+          </button>
+        </div>
+        <div class="next-row" id="next-row" hidden>
+          <button class="btn btn-primary" id="btn-next" type="button">Next email <kbd>Enter</kbd></button>
+        </div>
+      </div>
+
+      <aside class="side">
+        <div class="panel" id="checklist-panel">
+          <h3>Inspection checklist</h3>
+          <ul class="checklist" id="checklist"></ul>
+        </div>
+        <div class="panel feedback" id="feedback" hidden aria-live="polite"></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= RESULTS ================= -->
+  <section id="results" class="screen" hidden aria-label="Results">
+    <div class="topbar">
+      <button class="mini-brand" id="home-link-2" type="button" aria-label="Back to start">Haunted <span>Inbox</span></button>
+    </div>
+    <div class="results-head">
+      <div class="tombstone">
+        <span class="eyebrow">Final score</span>
+        <div class="final" id="r-score">0</div>
+        <div id="r-newbest"></div>
+        <div class="rank">
+          <span class="eyebrow">Your rank</span>
+          <h2 id="r-rank"></h2>
+          <p id="r-rank-desc"></p>
+        </div>
+        <div class="endreason" id="r-reason"></div>
+      </div>
+      <div class="statgrid">
+        <div class="stat accuracy-ring">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <circle cx="50" cy="50" r="42" fill="none" stroke="#261c3f" stroke-width="10"/>
+            <circle id="ring" cx="50" cy="50" r="42" fill="none" stroke="#ff7a1a" stroke-width="10" stroke-linecap="round" transform="rotate(-90 50 50)" stroke-dasharray="263.9" stroke-dashoffset="263.9" style="transition:stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1)"/>
+          </svg>
+          <div><small>Accuracy</small><strong id="r-acc">0%</strong><span id="r-acc-detail"></span></div>
+        </div>
+        <div class="stat"><small>Best streak</small><strong id="r-streak">0</strong><span>correct in a row</span></div>
+        <div class="stat"><small>Tier reached</small><strong id="r-tier">1</strong><span id="r-tier-name"></span></div>
+        <div class="stat"><small>Phish trusted</small><strong id="r-fn">0</strong><span>false negatives</span></div>
+        <div class="stat"><small>False alarms</small><strong id="r-fp">0</strong><span>safe mail flagged</span></div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Achievement <span>badges</span></h2>
+    <div class="badges" id="r-badges"></div>
+
+    <h2 class="section-title">Case <span>review</span></h2>
+    <div class="review" id="r-review"></div>
+
+    <div class="end-actions">
+      <button class="btn btn-primary" id="again" type="button">Investigate again</button>
+      <button class="btn btn-ghost" id="to-start" type="button">Back to start</button>
+    </div>
+  </section>
+
+  <div id="toasts" aria-live="polite"></div>
+</div>
+
+  <!-- Load order matters: questions.js and scoring.js define helpers that game.js uses. -->
+  <script src="js/questions.js"></script>
+  <script src="js/scoring.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
